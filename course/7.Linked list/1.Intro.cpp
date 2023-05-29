@@ -71,6 +71,57 @@ int Rsum(struct Node *p) {
   }
 };
 
+int max(struct Node *p) {
+  int m = -32768, MIN_INT;
+  while (p != NULL) {
+    if (p->data > m) {
+      m = p->data;
+    }
+    p = p->next;
+  }
+  return m;
+}
+
+int Rmax(struct Node *p) {
+  int MIN_INT;
+  int x = 0;
+  if (p == NULL)
+    return MIN_INT;
+  x = max(p->next);
+  return x > p->data ? x : p->data;
+}
+
+int search(struct Node *p, int key) {
+  while (p != NULL) {
+    if (key == p->data)
+      return p->data;
+    p = p->next;
+  }
+  return 0;
+}
+
+int Rsearch(struct Node *p, int key) {
+  if (p == NULL)
+    return 0;
+  if (key == p->data)
+    return p->data;
+  return Rsearch(p->next, key);
+}
+
+Node *IIsearch(struct Node *p, int key) {
+  Node *q = NULL;
+  while (p != NULL) {
+    if (key == p->data) {
+      q->next = p->next;
+      p->next = first;
+      first = p;
+      return p;
+    }
+    q = p;
+    p = p->next;
+  }
+}
+
 int main() {
 
   int A[] = {3, 5, 6, 7, 10, 15};
@@ -86,6 +137,13 @@ int main() {
   cout << Rcount(first) << endl;
   cout << sum(first) << endl;
   cout << Rsum(first) << endl;
+  cout << max(first) << endl;
+  cout << Rmax(first) << endl;
+  cout << search(first, 7) << endl;
+  cout << Rsearch(first, 17) << endl;
+  cout << IIsearch(first, 7) << endl;
+  display(first);
+  cout << endl;
 
   return 0;
 }

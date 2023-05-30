@@ -122,6 +122,27 @@ Node *IIsearch(struct Node *p, int key) {
   }
 }
 
+void insert(struct Node *p, int pos, int x) {
+  Node *t, *q;
+  if (pos == 0) {
+    t = new Node;
+    t->data = x;
+    t->next = first;
+    first = t;
+  } else if (pos > 0) {
+    p = first;
+    for (int i = 0; i < pos - 1; i++) {
+      q = p->next;
+    }
+    if (q) {
+      t = new Node;
+      t->data = x;
+      t->next = q->next;
+      q->next = t;
+    }
+  }
+}
+
 int main() {
 
   int A[] = {3, 5, 6, 7, 10, 15};
@@ -142,6 +163,9 @@ int main() {
   cout << search(first, 7) << endl;
   cout << Rsearch(first, 17) << endl;
   cout << IIsearch(first, 7) << endl;
+  display(first);
+  cout << endl;
+  insert(first, 4, 777);
   display(first);
   cout << endl;
 

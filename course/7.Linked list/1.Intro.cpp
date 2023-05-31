@@ -123,24 +123,46 @@ Node *IIsearch(struct Node *p, int key) {
 }
 
 void insert(struct Node *p, int pos, int x) {
-  Node *t, *q;
+  Node *t;
+  t = new Node;
+  t->data = x;
   if (pos == 0) {
-    t = new Node;
-    t->data = x;
     t->next = first;
     first = t;
-  } else if (pos > 0) {
-    p = first;
-    for (int i = 0; i < pos - 1; i++) {
-      q = p->next;
-    }
-    if (q) {
-      t = new Node;
-      t->data = x;
-      t->next = q->next;
-      q->next = t;
-    }
+  } else {
+    for (int i = 0; i < pos - 1; i++)
+      p = p->next;
+    t->next = p->next;
+    p->next = t;
   }
+}
+
+void insertLast(struct Node *p, int x) {
+  Node *t, *last;
+  t = new Node;
+  t->data = x;
+  t->next = NULL;
+  if (first == NULL) {
+    first = last = t;
+  } else {
+    last->next = t;
+    last = t;
+  }
+}
+
+void insertSort(struct Node *p, int x) {
+  Node *q, *t;
+  p = first;
+  q = NULL;
+
+  while (p && p->data < x) {
+    q = p;
+    p = p->next;
+  }
+  t = new Node;
+  t->data = x;
+  t->next = q->next;
+  q->next = t;
 }
 
 int main() {
@@ -165,7 +187,10 @@ int main() {
   cout << IIsearch(first, 7) << endl;
   display(first);
   cout << endl;
-  insert(first, 4, 777);
+  insert(first, 6, 777);
+  display(first);
+  cout << endl;
+  insertSort(first, 69);
   display(first);
   cout << endl;
 

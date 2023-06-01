@@ -165,6 +165,40 @@ void insertSort(struct Node *p, int x) {
   q->next = t;
 }
 
+int Delete(struct Node *p, int index) {
+  Node *q = NULL;
+  int x = -1;
+
+  if (index == 1) {
+    q = first;
+    x = first->data;
+    first = first->next;
+    delete q;
+    return x;
+  } else {
+    for (int i = 0; i < index - 1; i++) {
+      q = p;
+      p = p->next;
+    }
+    q->next = p->next;
+    x = p->data;
+    delete p;
+    return x;
+  }
+}
+
+bool isSorted(struct Node *p) {
+  int x = -32789;
+  while (p != NULL) {
+    if (p->data < x) {
+      return false;
+    }
+    x = p->data;
+    p = p->next;
+  }
+  return true;
+}
+
 int main() {
 
   int A[] = {3, 5, 6, 7, 10, 15};
@@ -187,12 +221,20 @@ int main() {
   cout << IIsearch(first, 7) << endl;
   display(first);
   cout << endl;
+
   insert(first, 6, 777);
   display(first);
   cout << endl;
+
   insertSort(first, 69);
   display(first);
   cout << endl;
+
+  Delete(first, 2);
+  display(first);
+  cout << endl;
+
+  cout << isSorted(first);
 
   return 0;
 }

@@ -233,6 +233,31 @@ void reverse(struct Node *p) {
   }
 }
 
+void IIreverse(struct Node *p) {
+  Node *q, *r;
+  p = first;
+  q = NULL;
+  r = NULL;
+
+  while (p != NULL) {
+    r = q;
+    q = p;
+    p = p->next;
+    q->next = r;
+  }
+  first = q;
+}
+
+void Rreverse(struct Node *q, struct Node *p) {
+
+  if (p != NULL) {
+    Rreverse(p, p->next);
+    p->next = q;
+  } else {
+    first = q;
+  }
+}
+
 int main() {
 
   int A[] = {3, 5, 5, 6, 7, 10, 15, 15, 15};
@@ -275,6 +300,14 @@ int main() {
   cout << endl;
 
   reverse(first);
+  display(first);
+  cout << endl;
+
+  IIreverse(first);
+  display(first);
+  cout << endl;
+
+  Rreverse(NULL, first);
   display(first);
   cout << endl;
 

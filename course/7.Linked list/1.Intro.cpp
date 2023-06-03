@@ -199,11 +199,45 @@ bool isSorted(struct Node *p) {
   return true;
 }
 
+void duplicate(struct Node *p) {
+  Node *q;
+  p = first;
+  q = p->next;
+
+  while (q != NULL) {
+    if (p->data != q->data) {
+      p = q;
+      q = q->next;
+    } else {
+      p->next = q->next;
+      delete q;
+      q = p->next;
+    }
+  }
+}
+
+void reverse(struct Node *p) {
+  p = first;
+  int i = 0;
+  int A[Rcount(p)];
+  while (p != NULL) {
+    A[i] = p->data;
+    p = p->next;
+    i++;
+  }
+  p = first;
+  i--;
+  while (p != NULL) {
+    p->data = A[i--];
+    p = p->next;
+  }
+}
+
 int main() {
 
-  int A[] = {3, 5, 6, 7, 10, 15};
+  int A[] = {3, 5, 5, 6, 7, 10, 15, 15, 15};
 
-  create(A, 6);
+  create(A, 9);
 
   display(first);
   cout << endl;
@@ -222,7 +256,7 @@ int main() {
   display(first);
   cout << endl;
 
-  insert(first, 6, 777);
+  insert(first, 9, 777);
   display(first);
   cout << endl;
 
@@ -234,7 +268,15 @@ int main() {
   display(first);
   cout << endl;
 
-  cout << isSorted(first);
+  cout << isSorted(first) << endl;
+
+  duplicate(first);
+  display(first);
+  cout << endl;
+
+  reverse(first);
+  display(first);
+  cout << endl;
 
   return 0;
 }

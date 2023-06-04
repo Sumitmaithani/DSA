@@ -4,7 +4,7 @@ using namespace std;
 struct Node {
   int data;
   struct Node *next;
-} *first = NULL;
+} *first = NULL, *second = NULL, *third = NULL;
 
 void create(int A[], int n) {
   int i;
@@ -13,6 +13,23 @@ void create(int A[], int n) {
   first->data = A[0];
   first->next = NULL;
   last = first;
+
+  for (i = 1; i < n; i++) {
+    t = new Node;
+    t->data = A[i];
+    t->next = NULL;
+    last->next = t;
+    last = t;
+  }
+}
+
+void create2(int A[], int n) {
+  int i;
+  struct Node *t, *last;
+  second = new Node;
+  second->data = A[0];
+  second->next = NULL;
+  last = second;
 
   for (i = 1; i < n; i++) {
     t = new Node;
@@ -258,11 +275,65 @@ void Rreverse(struct Node *q, struct Node *p) {
   }
 }
 
+void concatenation(struct Node *p, struct Node *q) {
+  third = p;
+  while (p->next != NULL) {
+    p = p->next;
+  }
+  p->next = q;
+}
+
+void merge(struct Node *p, struct Node *q) {
+  struct Node *last;
+  if (p->data < q->data) {
+    third = last = p;
+    p = p->next;
+    third->next = NULL;
+  } else {
+    third = last = q;
+    q = q->next;
+    third->next = NULL;
+  }
+  while (p && q) {
+    if (p->data < q->data) {
+      last->next = p;
+      last = p;
+      p = p->next;
+      last->next = NULL;
+    } else {
+      last->next = q;
+      last = q;
+      q = q->next;
+      last->next = NULL;
+    }
+  }
+  if (p)
+    last->next = p;
+  if (q)
+    last->next = q;
+}
+
+int isLoop(struct Node *f) {
+  struct Node *p, *q;
+  p = q = f;
+  do {
+    p = p->next;
+    q = q->next;
+    q = q ? q->next : q;
+  } while (p && q && p != q);
+
+  if (p == q)
+    return 1;
+  return 0;
+}
+
 int main() {
 
   int A[] = {3, 5, 5, 6, 7, 10, 15, 15, 15};
+  int B[] = {10, 20, 30, 40, 50};
 
   create(A, 9);
+  create2(B, 5);
 
   display(first);
   cout << endl;
@@ -310,6 +381,19 @@ int main() {
   Rreverse(NULL, first);
   display(first);
   cout << endl;
+
+  display(second);
+  cout << endl;
+
+  concatenation(first, second);
+  display(third);
+  cout << endl;
+
+  // merge(first, second);
+  // display(third);
+  // cout << endl;
+
+  cout << isLoop(first);
 
   return 0;
 }

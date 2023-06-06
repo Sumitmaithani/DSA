@@ -17,7 +17,9 @@ public:
 
   void Display();
   void RDisplay(Node *p);
-  Node* GetHead(); // New function declaration
+  void Insert(int index, int n);
+  void Delete(int index);
+  Node *GetHead();
 };
 
 LinkedList::LinkedList(int A[], int n) {
@@ -35,7 +37,7 @@ LinkedList::LinkedList(int A[], int n) {
     last->next = t;
     last = t;
   }
-  last->next = Head; // Make the last node point back to Head to form a circular linked list
+  last->next = Head;
 }
 
 void LinkedList::Display() {
@@ -59,16 +61,68 @@ void LinkedList::RDisplay(Node *p) {
   flag = 0;
 }
 
-Node* LinkedList::GetHead() { // New function definition
-  return Head;
+void LinkedList::Insert(int index, int n) {
+  Node *t = new Node, *p = Head;
+
+  if (index == 0) {
+    t->data = n;
+    if (Head == NULL) {
+      Head = t;
+      Head->next = Head;
+    } else {
+      t->next = Head;
+      while (p->next != Head) {
+        p = p->next;
+      }
+      p->next = t;
+      Head = t;
+    }
+  } else {
+    t->data = n;
+    for (int i = 0; i < index - 1; i++) {
+      p = p->next;
+    }
+    t->next = p->next;
+    p->next = t;
+  }
 }
+
+void LinkedList::Delete(int index) {
+  Node *p = Head, *q;
+  if (index == 0) {
+    while (p->next != Head) {
+      p = p->next;
+    }
+    p->next = Head->next;
+    delete Head;
+    Head = p->next;
+  } else {
+    for (int i = 0; i < index - 1; i++) {
+      p = p->next;
+    }
+    q = p->next;
+    p->next = q->next;
+    delete q;
+  }
+}
+
+Node *LinkedList::GetHead() { return Head; }
 
 int main() {
   int A[] = {1, 2, 3, 4, 5, 6};
   LinkedList l(A, 6);
 
   l.Display();
+
+  l.Insert(0, 0);
+
   l.RDisplay(l.GetHead()); // Use the GetHead() function to obtain the Head node
+
+  cout << endl;
+
+  l.Delete(0);
+
+  l.Display();
 
   return 0;
 }

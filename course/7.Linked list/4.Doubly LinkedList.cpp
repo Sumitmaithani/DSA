@@ -18,6 +18,7 @@ public:
 
   void Display();
   int length();
+  void Insert(int ele, int index);
 };
 
 LinkedList::LinkedList(int A[], int n) {
@@ -57,13 +58,43 @@ int LinkedList::length() {
   return len;
 }
 
+void LinkedList::Insert(int ele, int index) {
+  Node *t;
+  Node *p = first;
+
+  if (index == 0) {
+    t = new Node;
+    t->prev = NULL;
+    t->data = ele;
+    t->next = first;
+    first->prev = t;
+    first = t;
+  } else {
+    t = new Node;
+    t->data = ele;
+    for (int i = 0; i < index - 1; i++)
+      p = p->next;
+    t->prev = p;
+    t->next = p->next;
+    if (p->next)
+      p->next->prev = t;
+    p->next = t;
+  }
+}
+
 int main() {
   int A[] = {10, 20, 30, 40, 50, 60};
   LinkedList d(A, 6);
 
   d.Display();
 
-  cout << d.length();
+  cout << d.length() << endl;
+
+  d.Insert(0, 0);
+
+  d.Insert(45, 5);
+
+  d.Display();
 
   return 0;
 }

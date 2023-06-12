@@ -19,6 +19,8 @@ public:
   void Display();
   int length();
   void Insert(int ele, int index);
+  void Delete(int index);
+  void Reverse();
 };
 
 LinkedList::LinkedList(int A[], int n) {
@@ -82,6 +84,42 @@ void LinkedList::Insert(int ele, int index) {
   }
 }
 
+void LinkedList::Delete(int index) {
+  Node *p = first;
+  int x;
+
+  if (index == 0) {
+    first = first->next;
+    if (first)
+      first->prev = NULL;
+    x = p->data;
+    delete p;
+  } else {
+    for (int i = 0; i < index - 1; i++) {
+      p = p->next;
+    }
+    p->prev->next = p->next;
+    if (p->next)
+      p->next->prev = p->prev;
+    x = p->data;
+    delete p;
+  }
+}
+
+void LinkedList::Reverse() {
+  Node *p = first;
+  Node *temp;
+
+  while (p) {
+    temp = p->next;
+    p->next = p->prev;
+    p->prev = temp;
+    p = p->prev;
+    if (p != NULL && p->next == NULL)
+      first = p;
+  }
+}
+
 int main() {
   int A[] = {10, 20, 30, 40, 50, 60};
   LinkedList d(A, 6);
@@ -93,6 +131,16 @@ int main() {
   d.Insert(0, 0);
 
   d.Insert(45, 5);
+
+  d.Display();
+
+  d.Delete(0);
+
+  d.Delete(5);
+
+  d.Display();
+
+  d.Reverse();
 
   d.Display();
 

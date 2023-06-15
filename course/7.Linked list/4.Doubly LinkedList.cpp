@@ -21,6 +21,8 @@ public:
   void Insert(int ele, int index);
   void Delete(int index);
   void Reverse();
+  int MiddleElement();
+  int MiddleElement2();
 };
 
 LinkedList::LinkedList(int A[], int n) {
@@ -120,6 +122,36 @@ void LinkedList::Reverse() {
   }
 }
 
+int LinkedList::MiddleElement() {
+  Node *p = first;
+  int len = 0;
+  while (p) {
+    len++;
+    p = p->next;
+  }
+  int index = len / 2;
+  p = first;
+
+  for (int i = 0; i < index; i++) {
+    p = p->next;
+  }
+  return p->data;
+};
+
+int LinkedList::MiddleElement2() {
+  Node *p, *q;
+  p = q = first;
+  while (q) {
+    q = q->next;
+    if (q)
+      q = q->next;
+    if (q)
+      p = p->next;
+  }
+
+  return p->data;
+};
+
 int main() {
   int A[] = {10, 20, 30, 40, 50, 60};
   LinkedList d(A, 6);
@@ -132,6 +164,12 @@ int main() {
 
   d.Insert(45, 5);
 
+  d.Insert(46, 6);
+
+  d.Insert(47, 7);
+
+  d.Insert(48, 8);
+
   d.Display();
 
   d.Delete(0);
@@ -143,6 +181,10 @@ int main() {
   d.Reverse();
 
   d.Display();
+
+  cout << d.MiddleElement() << endl;
+
+  cout << d.MiddleElement2() << endl;
 
   return 0;
 }

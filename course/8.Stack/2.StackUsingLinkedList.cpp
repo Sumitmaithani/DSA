@@ -19,10 +19,6 @@ public:
   void Display();
 };
 
-// Stack::Stack(/* args */) {}
-
-// Stack::~Stack() {}
-
 void Stack::Push(int x) {
   Node *t;
   t = new Node;

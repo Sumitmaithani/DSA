@@ -5,7 +5,7 @@ using namespace std;
 
 class Node {
 public:
-  char data;
+  int data;
   Node *next;
 };
 
@@ -16,15 +16,16 @@ private:
 public:
   Stack() { top = nullptr; };
   // ~Stack();
-  void Push(char x);
-  char Pop();
+  void Push(int x);
+  int Pop();
   void Display();
   int Pre(char x);
   int isOperand(char x);
   char *InToPost(char *infix);
+  int Eval(char *postfix);
 };
 
-void Stack::Push(char x) {
+void Stack::Push(int x) {
   Node *t;
   t = new Node;
   if (t == NULL) {
@@ -36,10 +37,10 @@ void Stack::Push(char x) {
   }
 };
 
-char Stack::Pop() {
+int Stack::Pop() {
   Node *t;
   t = new Node;
-  char x = -1;
+  int x = -1;
   if (top == NULL)
     cout << "Stack is empty" << endl;
   else {
@@ -99,12 +100,45 @@ char *Stack::InToPost(char *infix) {
   return postfix;
 }
 
+int Stack::Eval(char *postfix) {
+  int x1, x2, r;
+  for (int i = 0; postfix[i] != '\0'; i++) {
+    if (isOperand(postfix[i])) {
+      Push(postfix[i] - '0');
+    } else {
+      x2 = Pop();
+      x1 = Pop();
+
+      switch (postfix[i]) {
+      case '+':
+        r = x1 + x2;
+        break;
+      case '-':
+        r = x1 - x2;
+        break;
+      case '*':
+        r = x1 * x2;
+        break;
+      case '/':
+        r = x1 / x2;
+        break;
+      }
+      Push(r);
+    }
+  }
+  return top->data;
+}
+
 int main() {
   char *infix = "a+b*c-d/e";
   Stack stk;
-  stk.Push('#');
-  char *postfix = stk.InToPost(infix);
-  cout << postfix << endl;
+  //   stk.Push('#');
+  //   char *postfix = stk.InToPost(infix);
+  //   cout << postfix << endl;
+
+  char *postfix = "234*+82/-";
+
+  cout << "Result is " << stk.Eval(postfix);
 
   return 0;
 }

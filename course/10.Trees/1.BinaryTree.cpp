@@ -106,7 +106,6 @@ void Tree::preorder(Node *p) {
     preorder(p->lchild);
     preorder(p->rchild);
   }
-  cout << endl;
 }
 
 void Tree::inorder(Node *p) {
@@ -115,7 +114,6 @@ void Tree::inorder(Node *p) {
     cout << p->data << " ";
     preorder(p->rchild);
   }
-  cout << endl;
 }
 
 void Tree::postorder(Node *p) {
@@ -124,15 +122,17 @@ void Tree::postorder(Node *p) {
     preorder(p->rchild);
     cout << p->data << " ";
   }
-  cout << endl;
 }
 
 int main() {
   Tree t;
   t.create();
   t.preorder(t.getRoot());
+  cout << endl;
   t.inorder(t.getRoot());
+  cout << endl;
   t.postorder(t.getRoot());
+  cout << endl;
 
   return 0;
 }

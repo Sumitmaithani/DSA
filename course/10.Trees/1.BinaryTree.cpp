@@ -61,6 +61,7 @@ public:
   void inorder(Node *p);
   void postorder(Node *p);
   Node *getRoot() { return root; }
+  void LevelOrder(Node *p);
 };
 
 void Tree::create() {
@@ -124,6 +125,25 @@ void Tree::postorder(Node *p) {
   }
 }
 
+void Tree::LevelOrder(Node *root) {
+  Queue q;
+  q.create(100);
+  cout << root->data << " ";
+  q.enqueue(root);
+
+  while (!q.isEmpty()) {
+    root = q.dequeue();
+    if (root->lchild) {
+      cout << root->lchild->data << " ";
+      q.enqueue(root->lchild);
+    }
+    if (root->rchild) {
+      cout << root->rchild->data << " ";
+      q.enqueue(root->rchild);
+    }
+  }
+}
+
 int main() {
   Tree t;
   t.create();
@@ -133,6 +153,7 @@ int main() {
   cout << endl;
   t.postorder(t.getRoot());
   cout << endl;
+  t.LevelOrder(t.getRoot());
 
   return 0;
 }

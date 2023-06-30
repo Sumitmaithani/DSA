@@ -62,6 +62,12 @@ public:
   void postorder(Node *p);
   Node *getRoot() { return root; }
   void LevelOrder(Node *p);
+  int Count(Node *root);
+  int Height(Node *root);
+  int Count0degLeaf(Node *root);
+  int Count1degLeaf(Node *root);
+  int Count2degLeaf(Node *root);
+  int Count1_2degLeaf(Node *root);
 };
 
 void Tree::create() {
@@ -144,6 +150,79 @@ void Tree::LevelOrder(Node *root) {
   }
 }
 
+int Tree::Count(Node *root) {
+  int x, y;
+  if (root) {
+    x = Count(root->lchild);
+    y = Count(root->rchild);
+    return x + y + 1;
+  }
+  return 0;
+}
+
+int Tree::Height(Node *root) {
+  int x, y;
+  if (root == 0)
+    return 0;
+  x = Height(root->lchild);
+  y = Height(root->rchild);
+  if (x > y)
+    return x + 1;
+  return y + 1;
+}
+
+int Tree::Count0degLeaf(Node *root) {
+  int x, y;
+  if (root != NULL) {
+    x = Count0degLeaf(root->lchild);
+    y = Count0degLeaf(root->rchild);
+    if (!root->lchild && !root->rchild)
+      return x + y + 1;
+    else
+      return x + y;
+  }
+  return 0;
+}
+
+int Tree::Count1degLeaf(Node *root) {
+  int x, y;
+  if (root != NULL) {
+    x = Count1degLeaf(root->lchild);
+    y = Count1degLeaf(root->rchild);
+    if ((root->lchild && !root->rchild) || (!root->lchild && root->rchild))
+      return x + y + 1;
+    else
+      return x + y;
+  }
+  return 0;
+}
+
+int Tree::Count2degLeaf(Node *root) {
+  int x, y;
+  if (root != NULL) {
+    x = Count2degLeaf(root->lchild);
+    y = Count2degLeaf(root->rchild);
+    if (root->lchild && root->rchild)
+      return x + y + 1;
+    else
+      return x + y;
+  }
+  return 0;
+}
+
+int Tree::Count1_2degLeaf(Node *root) {
+  int x, y;
+  if (root != NULL) {
+    x = Count1_2degLeaf(root->lchild);
+    y = Count1_2degLeaf(root->rchild);
+    if (root->lchild || root->rchild)
+      return x + y + 1;
+    else
+      return x + y;
+  }
+  return 0;
+}
+
 int main() {
   Tree t;
   t.create();
@@ -154,6 +233,12 @@ int main() {
   t.postorder(t.getRoot());
   cout << endl;
   t.LevelOrder(t.getRoot());
+  cout << endl << t.Count(t.getRoot()) << endl;
+  cout << "Height : " << t.Height(t.getRoot()) << endl;
+  cout << "0 deg Node : " << t.Count0degLeaf(t.getRoot()) << endl;
+  cout << "1 deg Node : " << t.Count1degLeaf(t.getRoot()) << endl;
+  cout << "2 deg Node : " << t.Count2degLeaf(t.getRoot()) << endl;
+  cout << "1-2 deg Node : " << t.Count1_2degLeaf(t.getRoot()) << endl;
 
   return 0;
 }

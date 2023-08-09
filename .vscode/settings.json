@@ -4,7 +4,8 @@
     "iostream": "cpp",
     "random": "cpp",
     "string_view": "cpp",
-    "*.tcc": "cpp"
+    "*.tcc": "cpp",
+    "regex": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

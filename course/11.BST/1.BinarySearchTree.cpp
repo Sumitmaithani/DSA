@@ -14,6 +14,7 @@ public:
   void Insert(int key);
   void Inorder(Node *p);
   Node *Search(int key);
+  Node *RInsert(Node *p, int key);
 };
 
 void BST::Insert(int key) {
@@ -67,14 +68,34 @@ Node *BST::Search(int key) {
   return NULL;
 }
 
+Node *BST::RInsert(Node *p, int key) {
+  Node *t = NULL;
+
+  if (p == NULL) {
+    t = new Node;
+    t->data = key;
+    t->lchild = t->rchild = NULL;
+    return t;
+  }
+
+  if (key < p->data)
+    p->lchild = RInsert(p->lchild, key);
+  else if (key > p->data)
+    p->rchild = RInsert(p->rchild, key);
+
+  return p;
+}
+
 int main() {
   BST p;
   Node *temp;
-  p.Insert(10);
-  p.Insert(30);
-  p.Insert(20);
-  p.Insert(50);
-  p.Insert(40);
+  Node *res = p.getRoot();
+  res = p.RInsert(p.getRoot(), 10);
+  cout << res->data << endl;
+  p.RInsert(res, 20);
+  p.RInsert(res, 30);
+  p.RInsert(res, 40);
+  p.RInsert(res, 50);
 
   p.Inorder(p.getRoot());
 
@@ -82,8 +103,8 @@ int main() {
   temp = p.Search(30);
   if (temp) {
     cout << temp->data;
-  } else{
-    cout<<"Element is not found"<<endl;
+  } else {
+    cout << "Element is not found" << endl;
   }
 
   return 0;

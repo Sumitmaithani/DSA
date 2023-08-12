@@ -1,23 +1,26 @@
 #include <bits/stdc++.h>
-#include <iostream>
 
 using namespace std;
 
 int main() {
-  vector<int> nums;
+  map<char, int> m;
   string str;
   cin >> str;
 
   for (int i = 0; i < str.size(); ++i) {
-    if (str[i] == 1 || str[i] == 2 || str[i] == 3) {
-      nums.push_back(str[i]);
+    if (str[i] != '+') {
+      m[str[i]]++;
     }
   }
-  sort(nums.begin(), nums.end());
-  for (int i = 0; i < nums.size(); ++i) {
-    cout << nums[i];
-    if (i != nums.size() - 1) {
-      cout << "+";
+  int c = 0;
+  for (auto x : m) {
+    while (x.second) {
+      cout << x.first;
+      c++;
+      x.second--;
+      if (c < str.size() / 2 + 1) {
+        cout << '+';
+      }
     }
   }
   cout << endl;
